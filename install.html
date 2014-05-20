@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
-        <title>AMSL &ndash; Bootcamp</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
-        <link rel="stylesheet" href="css/layouts/side-menu.css">
-        <link rel="stylesheet" href="css/elag.css">
-        <link rel="stylesheet" href="css/default.css">
-    </head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>AMSL &ndash; Bootcamp</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+    <link rel="stylesheet" href="css/layouts/side-menu.css">
+    <link rel="stylesheet" href="css/elag.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,300,700,600' rel='stylesheet' type='text/css'>
+</head>
     <body>
         <div id="layout">
             <!-- Menu toggle -->
@@ -33,22 +34,48 @@
                     <h2>Let's go!</h2>
                 </div>
                 <div class="content">
-                    <h1 id="virtuoso">Virtuoso</h1>
+                    <h1 id="apache-http-server">Apache HTTP Server</h1>
+<p>Stuff …</p>
+
+<h1 id="ontowiki">OntoWiki</h1>
+<p>Download OntoWiki and Stuff …</p>
+
+<h1 id="virtuoso">Virtuoso</h1>
 <p>Let’s start with the Virtuoso Database. If you are using the virtual machine you can install it from the official repositories: </p>
-<pre><code>$ sudo apt-get install virtuoso-opensource</code></pre>
 
 <p>You can now start the database server daemon with </p>
 <pre><code>$ sudo service virtuoso-opensource-6.1 start</code></pre>
 
 <p>Afterwards you can access the Virtuoso Conductor in your browser at <code-inline>http://localhost:8890/</code-inline> to assure Virtuoso is running.</p>
 
-<h3 id="configuration">Configuration</h3>
+<h2 id="configuration">Configuration</h2>
 <p>The central configuration file is located at <code-inline>/etc/virtuoso-opensource-6.1/virtuoso.ini</code-inline>. In that file add your OntoWiki directory to the <code-inline>DirsAllowed</code-inline> parameter:</p>
 
 <pre><code class="apache">DirsAllowed = ., /usr/share/virtuoso-opensource-6.1/vad/, /path/to/OntoWiki/</code></pre>
 
 <p>Now restart Virtuoso to let the changes take effect.</p>
 <pre><code>$ sudo service virtuoso-opensource-6.1 restart</code></pre>
+
+<h1 id="php-and-odbc">PHP and ODBC</h1>
+<pre><code>$ sudo apt-get install php5 php5-odbc libapache2-mod-php5</code></pre>
+
+<h2 id="configuration-1">Configuration</h2>
+<p>To make ODBC work with Virtuoso, two config files have to be edited. Add following lines to <code-inline>/etc/odbc.ini</code-inline> (create if not existent): </p>
+
+<pre><code>[ODBC Data Sources]
+VOS = Virtuoso
+
+[VOS]
+Driver = virtuoso-odbc
+Description = Virtuoso Open-Source Edition
+Address = localhost:1111
+</code></pre>
+
+<p>Then edit <code-inline>/etc/odbcinst.ini</code-inline> and add the following lines:</p>
+
+<pre><code>[virtuoso-odbc]
+Driver = /usr/lib/virtodbc.so   
+</code></pre>
 
                 </div>
             </div>
