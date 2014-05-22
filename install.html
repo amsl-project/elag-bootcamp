@@ -60,8 +60,21 @@
 <h1 id="php-and-odbc">PHP and ODBC</h1>
 <pre><code>$ sudo apt-get install php5 php5-odbc libapache2-mod-php5</code></pre>
 
-<h2 id="configuration-1">Configuration</h2>
-<p>To make ODBC work with Virtuoso, two config files have to be edited. Add following lines to <code-inline>/etc/odbc.ini</code-inline> (create if not existent): </p>
+<h2 id="odbc-configuration">ODBC Configuration</h2>
+
+<p>By default, ODBC should be working out-of-the-box. To check if your ODBC connection is working correctly execute the ODBC test.</p>
+
+<p><a class="pure-button" id="odbctest-button"><i class="fa fa-play-circle-o button-icon"></i> Start ODBC test</a></p>
+
+<div id="odbctest-output"></div>
+
+<p>If the test fails, click on the following button to see instructions.</p>
+
+<p><a class="pure-button" id="odbc-instructions-button"><i class="fa fa-book button-icon"></i> Show instructions</a></p>
+
+<div id="odbc-instructions" class="hidden-div">
+
+To make ODBC work with Virtuoso, two config files have to be edited. Add following lines to <code-inline>/etc/odbc.ini</code-inline> (create if not existent): 
 
 <pre><code>[ODBC Data Sources]
 VOS = Virtuoso
@@ -72,19 +85,13 @@ Description = Virtuoso Open-Source Edition
 Address = localhost:1111
 </code></pre>
 
-<p>Then edit <code-inline>/etc/odbcinst.ini</code-inline> and add the following lines:</p>
+Then edit <code-inline>/etc/odbcinst.ini</code-inline> and add the following lines:
 
 <pre><code>[virtuoso-odbc]
 Driver = /usr/lib/virtodbc.so   
 </code></pre>
 
-<h3 id="odbc-connection-test">ODBC Connection Test</h3>
-
-<p>To check if your ODBC connection is working correctly execute the ODBC test.</p>
-
-<p><a class="pure-button" id="odbctest-button">Start ODBC test</a></p>
-
-<div id="odbctest-output"></div>
+</div>
 
                 </div>
             </div>
@@ -92,16 +99,6 @@ Driver = /usr/lib/virtodbc.so
         <script src="js/highlight.js"></script>
         <script src="js/ui.js"></script>
         <script src="js/jquery.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            $(function() {
-                $('#odbctest-button').click(function() {
-                    $.get('php/odbctest.php', function(data) {
-                        $('#odbctest-output').text(data);
-                    });
-                    return false;
-                });
-            });
-        </script>
+        <script src="js/elag.js"></script>
     </body>
 </html>
