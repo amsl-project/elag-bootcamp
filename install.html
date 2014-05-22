@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/elag.css">
     <link rel="stylesheet" href="css/default.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,300,700,600' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
     <body>
         <div id="layout">
@@ -77,11 +78,30 @@ Address = localhost:1111
 Driver = /usr/lib/virtodbc.so   
 </code></pre>
 
+<h3 id="odbc-connection-test">ODBC Connection Test</h3>
+
+<p>To check if your ODBC connection is working correctly execute the ODBC test.</p>
+
+<p><a class="pure-button" id="odbctest-button">Start ODBC test</a></p>
+
+<div id="odbctest-output"></div>
+
                 </div>
             </div>
         </div>
         <script src="js/highlight.js"></script>
         <script src="js/ui.js"></script>
+        <script src="js/jquery.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            $(function() {
+                $('#odbctest-button').click(function() {
+                    $.get('php/odbctest.php', function(data) {
+                        $('#odbctest-output').text(data);
+                    });
+                    return false;
+                });
+            });
+        </script>
     </body>
 </html>
