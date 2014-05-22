@@ -2,10 +2,8 @@
 title: "home"
 ---
 
-Now is the time for all good men to come to the aid of their country. This is just a regular paragraph.
+# Hi there!
+Welcome to the ELAG2014 Bootcamp "Touching Linked Data". I will be your guide.
 
-## Shopping list
-
-1. Bread
-2. Butter
-3. Refined uranium
+## Introduction
+At the beginning, we are going to check if your computer is set-up correctly. To see if all the neccessary requirements are fulfilled, go to the next page.
