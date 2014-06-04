@@ -35,14 +35,62 @@
                     <h2>Let's go!</h2>
                 </div>
                 <div class="content">
-                    <h1 id="apache-http-server">Apache HTTP Server</h1>
-<p>Stuff …</p>
+                    <h1 id="images-overview">Images Overview</h1>
+
+<ul>
+  <li>There are two images, namely
+    <ul>
+      <li>elag2014_64 (for 64bit machines)</li>
+      <li>elag2014_32 (for 32bit machines)</li>
+    </ul>
+  </li>
+  <li>the computer name (not really needed) is elag</li>
+  <li>The (only) user on these machines is
+    <ul>
+      <li>user name: elag</li>
+      <li>password: elag</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="manjaroarch">Manjaro/Arch</h2>
+
+<ul>
+  <li>Install VirtualBox with pacman</li>
+  <li>Install and enable the kernel modules, as pointed out here: <a href="https://wiki.archlinux.org/index.php/VirtualBox">https://wiki.archlinux.org/index.php/VirtualBox</a>, especially point 1.2 und 1.3</li>
+</ul>
+
+<h1 id="php-and-odbc">PHP and ODBC</h1>
+<p>Most of the following instructions can be done with the help of your terminal and editor of choice. PHP has already been installed on the VM but to make it work with OntoWiki we need two additional packages:</p>
+
+<pre><code>$ sudo apt-get install php5-odbc libapache2-mod-php5</code></pre>
+
+<p>The first package provides the required ODBC driver for PHP and the second one allows for the Apache2 to render PHP.</p>
+
+<p>Now let’s configure php. Therefore locate php.ini via <code-inline>updatedb</code-inline>.</p>
+
+<pre><code class="bash">$ sudo updatedb
+$ locate php.ini
+$ [editor] /path/to/php.ini
+</code></pre>
+
+<p>… change the values as recommended</p>
 
 <h1 id="ontowiki">OntoWiki</h1>
-<p>Download OntoWiki and Stuff …</p>
+<pre><code class="bash">$ cd /var/www/html
+$ sudo mkdir OntoWiki
+$ sudo chown -R elag:elag OntoWiki
+$ sudo apt-get install git
+$ git clone https://github.com/AKSW/OntoWiki.git OntoWiki 
+$ cd OntoWiki
+$ sudo apt-get install make
+$ make deploy
+</code></pre>
+
+<p>You can enable debugging in OntoWiki by editing config.ini (copy and rename config.ini.dist before)</p>
 
 <h1 id="virtuoso">Virtuoso</h1>
-<p>Let’s start with the Virtuoso Database. If you are using the virtual machine you can install it from the official repositories: </p>
+<p>If you are using the virtual machine you can install it from the official repositories: </p>
 
 <p>You can now start the database server daemon with </p>
 <pre><code>$ sudo service virtuoso-opensource-6.1 start</code></pre>
@@ -56,9 +104,6 @@
 
 <p>Now restart Virtuoso to let the changes take effect.</p>
 <pre><code>$ sudo service virtuoso-opensource-6.1 restart</code></pre>
-
-<h1 id="php-and-odbc">PHP and ODBC</h1>
-<pre><code>$ sudo apt-get install php5 php5-odbc libapache2-mod-php5</code></pre>
 
 <h2 id="odbc-configuration">ODBC Configuration</h2>
 
@@ -92,6 +137,29 @@ Driver = /usr/lib/virtodbc.so
 </code></pre>
 
 </div>
+
+<h1 id="apacheontowiki-part-2">Apache/OntoWiki Part 2</h1>
+<p>Once Virtuoso, ODBC and PHP are running we can finally configure the Apache Webserver and OntoWiki. First, edit <code-inline>/etc/apache2/sites-enabled/000-default.conf</code-inline></p>
+
+<pre><code class="xml">&lt;Directory "/var/www/html"&gt;
+Options Indexes [FollowSymLinks](./FollowSymLinks.markdown)
+AllowOverride All 
+&lt;/Directory&gt;
+</code></pre>
+
+<p>Now Restart apache.</p>
+<pre><code class="bash">$ sudo service apache2 restart</code></pre>
+
+<p>And don’t forget to activate Apache’s mod rewriting.</p>
+<pre><code class="bash">$ sudo a2enmod rewrite</code></pre>
+
+<p>Now checkout the required branch and initialize the submodules.</p>
+<pre><code class="bash">$ git checkout --track -b deployment/erm-hd origin/deployment/erm-hd
+$ git submodules init
+$ git submodules update
+</code></pre>
+
+<p>Finally check <a href="http://localhost/OntoWiki">http://localhost/OntoWiki</a> if OntoWiki is running correctly.</p>
 
                 </div>
             </div>
