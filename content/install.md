@@ -12,10 +12,18 @@ title: "Installation"
     * user name: elag
     * password: elag
 
-## Manjaro/Arch
+## VirtualBox Installation Instructions
+
+### Manjaro/Arch
 
 * Install VirtualBox with pacman
 * Install and enable the kernel modules, as pointed out here: [https://wiki.archlinux.org/index.php/VirtualBox](https://wiki.archlinux.org/index.php/VirtualBox), especially point 1.2 und 1.3
+
+### Ubuntu
+
+Install VirtualBox with apt-get:
+
+<pre><code>$  sudo apt-get install virtualbox virtualbox-qt virtualbox-dkms virtualbox-guest-dkms</code></pre>
 
 # PHP and ODBC
 Most of the following instructions can be done with the help of your terminal and editor of choice. PHP has already been installed on the VM but to make it work with OntoWiki we need two additional packages:
@@ -31,7 +39,14 @@ $ locate php.ini
 $ [editor] /path/to/php.ini
 </code></pre>
 
-... change the values as recommended
+Now change the values as recommended:
+
+<pre><code class='bash'>max_execution_time = 120
+memory_limit = 512M
+upload_max_filesize = 128M 
+post_max_size = 16M
+short_open_tag = On
+</code></pre>
 
 
 # OntoWiki
@@ -48,7 +63,9 @@ $ make deploy
 You can enable debugging in OntoWiki by editing config.ini (copy and rename config.ini.dist before)
 
 # Virtuoso
-If you are using the virtual machine you can install it from the official repositories: 
+If you are using the virtual machine you can install it from the official repositories:
+
+<pre><code>$ sudo apt-get install virtuoso</code></pre>  
 
 You can now start the database server daemon with 
 <pre><code>$ sudo service virtuoso-opensource-6.1 start</code></pre> 
