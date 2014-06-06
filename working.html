@@ -20,16 +20,17 @@
             <span></span>
             </a>
             <div id="menu">
-                <div class="pure-menu pure-menu-open">
-                    <a class="pure-menu-heading" href="#">AMSL</a>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="start.html">Start</a></li>
-                        <li><a href="install.html">Installation</a></li>
-                        <li class="menu-item-divided pure-menu-selected"><a href="#">Querying data</a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="pure-menu pure-menu-open">
+        <a class="pure-menu-heading" href="#">AMSL</a>
+        <ul>
+            <li id="menu_item_home"><a href="index.html">Home</a></li>
+            <li id="menu_item_install"><a href="install.html">Installation</a></li>
+            <li id="menu_item_start"><a href="start.html">Start</a></li>
+            <li id="menu_item_working"><a href="working.html">Querying data</a></li>
+            <li id="menu_item_isql"><a href="isql.html">ISQL</a></li>
+        </ul>
+    </div>
+</div>
             <div id="main">
                 <div class="header">
                     <h1>Working with data</h1>
@@ -38,120 +39,108 @@
                 <div class="content">
                     <h1 id="interesting-queries">Interesting Queries</h1>
 
-<h2 id="query-1--ask-for-all-classes-inside-movies-knowledge-base">Query 1 : Ask for all classes inside movies knowledge base</h2>
+<h2 id="query-1--find-all-classes-of-the-movies-knowledge-base">Query 1 : Find all classes of the movies knowledge base</h2>
 
-<pre><code class="sql">PREFIX ns0:     &lt;http://dbpedia.org/property/&gt;
-PREFIX dbpprop: &lt;http://dbpedia.org/property/&gt;
-PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+<pre><code class="sql">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
-SELECT DISTINCT ?c WHERE 
+SELECT DISTINCT ?object WHERE 
 {
-    ?s rdf:type ?c .
-} 
-LIMIT 50
+    ?subject rdf:type ?object .
+}
 </code></pre>
 
-<h2 id="query-2--ask-for-all-instances-of-all-classes-inside-the-movies-knowledge-base">Query 2 : Ask for all instances of all classes inside the movies knowledge base</h2>
+<h2 id="query-2--find-all-instances-of-all-classes-of-the-movies-knowledge-base">Query 2 : Find all instances of all classes of the movies knowledge base</h2>
 
-<pre><code class="sql">PREFIX ns0:     &lt;http://dbpedia.org/property/&gt;
-PREFIX dbpprop: &lt;http://dbpedia.org/property/&gt;
-PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+<pre><code class="sql">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
-SELECT DISTINCT ?s WHERE 
+SELECT DISTINCT ?subject WHERE 
 {
-    ?s rdf:type ?c .
-} 
-LIMIT 50
+    ?subject rdf:type ?object .
+}
 </code></pre>
 
-<h2 id="query-3--ask-for-all-instances-of-the-class-film">Query 3 : Ask for all instances of the class film</h2>
+<h2 id="query-3--find-all-instances-of-the-class-film">Query 3 : Find all instances of the class film</h2>
 
-<pre><code class="sql">PREFIX ns0:     &lt;http://dbpedia.org/property/&gt;
-PREFIX dbpprop: &lt;http://dbpedia.org/property/&gt;
-PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+<pre><code class="sql">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
-SELECT DISTINCT ?s WHERE 
+SELECT DISTINCT ?subject WHERE 
 {
-    ?s rdf:type &lt;http://dbpedia.org/ontology/Film&gt; .
-} 
-LIMIT 50
+    ?subject rdf:type &lt;http://dbpedia.org/ontology/Film&gt; .
+}
 </code></pre>
 
-<h2 id="query-4--ask-for-all-films-of-a-single-actor">Query 4 : Ask for all films of a single actor</h2>
+<h2 id="query-4--find-all-films-of-a-single-actor">Query 4 : Find all films of a single actor</h2>
 
-<pre><code class="sql">PREFIX ns4: &lt;http://www.w3.org/ns/prov#&gt;
-PREFIX ns3: &lt;http://dbpedia.org/datatype/&gt;
-PREFIX ns2: &lt;http://dbpedia.org/ontology/&gt;
-PREFIX ns1: &lt;http://dbpedia.org/ontology/Work/&gt;
-PREFIX ns0: &lt;http://dbpedia.org/property/&gt;
-PREFIX dbo: &lt;http://dbpedia.org/property/&gt;
-PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
-PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+<pre><code class="sql">PREFIX dbo:     &lt;http://dbpedia.org/property/&gt;
 PREFIX dbpedia: &lt;http://dbpedia.org/resource/&gt;
 
 SELECT DISTINCT ?film WHERE 
 {
     ?film dbo:starring dbpedia:Akshaye_Khanna .
-} 
-LIMIT 50
+}
 </code></pre>
 
-<h2 id="query-5--ask-for-all-films-wherein-two-different-persons-acting">Query 5 : Ask for all films wherein two different persons acting</h2>
+<h2 id="query-5--find-all-films-starring-maya-sansa-and-regina-orioli">Query 5 : Find all films starring Maya Sansa and Regina Orioli</h2>
 
-<pre><code class="sql">PREFIX ns4: &lt;http://www.w3.org/ns/prov#&gt;
-PREFIX ns3: &lt;http://dbpedia.org/datatype/&gt;
-PREFIX ns2: &lt;http://dbpedia.org/ontology/&gt;
-PREFIX ns1: &lt;http://dbpedia.org/ontology/Work/&gt;
-PREFIX ns0: &lt;http://dbpedia.org/property/&gt;
-PREFIX dbo: &lt;http://dbpedia.org/property/&gt;
-PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
-PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+<pre><code class="sql">PREFIX dbo:     &lt;http://dbpedia.org/property/&gt;
 PREFIX dbpedia: &lt;http://dbpedia.org/resource/&gt;
 
 SELECT DISTINCT ?film WHERE 
 {
     ?film dbo:starring dbpedia:Maya_Sansa    .
     ?film dbo:starring dbpedia:Regina_Orioli .
-} 
-LIMIT 50
+}
 </code></pre>
 
-<h2 id="query-6--ask-for-all-films-where-the-producer-name-contains-lee-and-the-actor-name-contains-sang-min">Query 6 : Ask for all films where the producer name contains ‘Lee’ and the actor name contains ‘Sang-min’</h2>
+<h2 id="query-6--find-all-films-where-the-producer-name-contains-lee-and-the-actor-name-contains-sang-min">Query 6 : Find all films where the producer name contains ‘Lee’ and the actor name contains ‘Sang-min’</h2>
 
-<pre><code class="sql">PREFIX ns4: &lt;http://www.w3.org/ns/prov#&gt;
-PREFIX ns3: &lt;http://dbpedia.org/datatype/&gt;
-PREFIX ns2: &lt;http://dbpedia.org/ontology/&gt;
-PREFIX ns1: &lt;http://dbpedia.org/ontology/Work/&gt;
-PREFIX ns0: &lt;http://dbpedia.org/property/&gt;
-PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
-PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX owl: &lt;http://www.w3.org/2002/07/owl#&gt;
-PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-PREFIX dbo: &lt;http://dbpedia.org/property/&gt;
-PREFIX dbpprop: &lt;http://dbpedia.org/property/&gt;
+<pre><code class="sql">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dbo:  &lt;http://dbpedia.org/property/&gt;
+PREFIX dbp:  &lt;http://dbpedia.org/property/&gt;
 
-SELECT DISTINCT ?film WHERE 
+SELECT DISTINCT ?film ?label WHERE 
 {
-    ?film dbpprop:producer ?producer .
-    FILTER regex(str(?producer), "Lee")
-           
-        ?film dbo:starring ?actor .
-    FILTER regex(str(?actor), "Sang-min")
-} 
-LIMIT 50
+    ?film dbp:producer ?producer ;
+          dbo:starring ?actor ;
+          foaf:name    ?label .
+  
+    FILTER regex( str(?producer), "Lee" ) .
+        FILTER regex( str(?actor),    "Sang") .
+}
+ORDER BY ?label
+</code></pre>
+
+<h2 id="query-7--find-all-films-where-the-director-producer-and-actor-is-the-same-person">Query 7 : Find all films where the director, producer and actor is the same person</h2>
+
+<pre><code class="sql">PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX dbo:  &lt;http://dbpedia.org/ontology/&gt;
+PREFIX dbp:  &lt;http://dbpedia.org/property/&gt;
+
+SELECT DISTINCT ?fname ?producer WHERE 
+{
+    ?film dbp:producer ?producer ;      
+              dbp:starring ?producer ;
+          dbo:director ?producer ;
+          foaf:name    ?fname .
+}
+</code></pre>
+
+<h2 id="query-8--find-all-films-where-the-director-producer-and-actor-is-the-same-person">Query 8 : Find all films where the director, producer and actor is the same person</h2>
+
+<pre><code class="sql">PREFIX dbo: &lt;http://dbpedia.org/ontology/&gt;
+PREFIX dbr: &lt;http://dbpedia.org/resource/&gt;
+
+select distinct ?actor ?m_Hanks ?m_Depp where 
+{
+    ?m_Hanks a            dbo:Film ;
+             dbo:starring dbr:Tom_Hanks ;
+             dbo:starring ?actor .
+
+    ?m_Depp  a            dbo:Film ;
+             dbo:starring dbr:Johnny_Depp ;
+             dbo:starring ?actor .
+}
+ORDER BY ?actor 
 </code></pre>
 
                 </div>
@@ -161,5 +150,11 @@ LIMIT 50
         <script src="js/ui.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/elag.js"></script>
+        <script src="js/ui.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu_item_working").addClass("menu-item-divided pure-menu-selected");
+            });
+        </script>
     </body>
 </html>

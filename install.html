@@ -20,16 +20,17 @@
             <span></span>
             </a>
             <div id="menu">
-                <div class="pure-menu pure-menu-open">
-                    <a class="pure-menu-heading" href="#">AMSL</a>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="start.html">Start</a></li>
-                        <li class="menu-item-divided pure-menu-selected"><a href="#">Installation</a></li>
-                        <li><a href="working.html">Querying data</a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="pure-menu pure-menu-open">
+        <a class="pure-menu-heading" href="#">AMSL</a>
+        <ul>
+            <li id="menu_item_home"><a href="index.html">Home</a></li>
+            <li id="menu_item_install"><a href="install.html">Installation</a></li>
+            <li id="menu_item_start"><a href="start.html">Start</a></li>
+            <li id="menu_item_working"><a href="working.html">Querying data</a></li>
+            <li id="menu_item_isql"><a href="isql.html">ISQL</a></li>
+        </ul>
+    </div>
+</div>
             <div id="main">
                 <div class="header">
                     <h1>Installation</h1>
@@ -192,5 +193,10 @@ AllowOverride All
         <script src="js/ui.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/elag.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu_item_install").addClass("menu-item-divided pure-menu-selected");
+            });
+        </script>
     </body>
 </html>
