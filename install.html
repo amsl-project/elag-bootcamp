@@ -128,6 +128,7 @@ $ sudo chown -R elag:elag OntoWiki
 $ sudo apt-get install git
 $ git clone https://github.com/AKSW/OntoWiki.git OntoWiki 
 $ cd OntoWiki
+$ git checkout --track -b deployment/erm-hd origin/deployment/erm-hd
 $ make deploy
 </code></pre>
 
@@ -181,12 +182,6 @@ AllowOverride All
 
 <p>Now Restart apache.</p>
 <pre><code class="bash">$ sudo service apache2 restart</code></pre>
-
-<p>Now checkout the required branch and initialize the submodules.</p>
-<pre><code class="bash">$ git checkout --track -b deployment/erm-hd origin/deployment/erm-hd
-$ git submodules init
-$ git submodules update
-</code></pre>
 
 <p>Finally check <a href="http://localhost/OntoWiki">http://localhost/OntoWiki</a> if OntoWiki is running correctly.</p>
 
