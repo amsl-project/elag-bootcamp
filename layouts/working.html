@@ -11,19 +11,22 @@
             <%= render 'menu' %>
             <div id="main">
                 <div class="header">
-                    <h1>Start</h1>
-                    <h2>Installation</h2>
+                    <h1>Working with SPARQL</h1>
+                    <h2>Using SPARQL for querying data.</h2>
                 </div>
                 <div class="content">
                     <%= yield %>
                 </div>
             </div>
         </div>
+        <script src="js/highlight.js"></script>
+        <script src="js/ui.js"></script>
         <script src="js/jquery.js"></script>
+        <script src="js/elag.js"></script>
         <script src="js/ui.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                $("#menu_item_start").addClass("menu-item-divided pure-menu-selected");
+                $("#menu_item_working").addClass("menu-item-divided pure-menu-selected");
             });
         </script>
     </body>

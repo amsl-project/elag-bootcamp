@@ -8,17 +8,7 @@
             <!-- Hamburger icon -->
             <span></span>
             </a>
-            <div id="menu">
-                <div class="pure-menu pure-menu-open">
-                    <a class="pure-menu-heading" href="#">AMSL</a>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li class="menu-item-divided pure-menu-selected"><a href="#">Start</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
+            <%= render 'menu' %>
             <div id="main">
                 <div class="header">
                     <h1>Touching Linked Data</h1>
@@ -29,6 +19,12 @@
                 </div>
             </div>
         </div>
+        <script src="js/jquery.js"></script>
         <script src="js/ui.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu_item_home").addClass("menu-item-divided pure-menu-selected");
+            });
+        </script>
     </body>
 </html>

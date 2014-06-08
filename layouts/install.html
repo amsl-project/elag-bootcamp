@@ -8,16 +8,7 @@
             <!-- Hamburger icon -->
             <span></span>
             </a>
-            <div id="menu">
-                <div class="pure-menu pure-menu-open">
-                    <a class="pure-menu-heading" href="#">AMSL</a>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="start.html">Start</a></li>
-                        <li class="menu-item-divided pure-menu-selected"><a href="#">Installation</a></li>
-                    </ul>
-                </div>
-            </div>
+            <%= render 'menu' %>
             <div id="main">
                 <div class="header">
                     <h1>Installation</h1>
@@ -32,5 +23,10 @@
         <script src="js/ui.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/elag.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu_item_install").addClass("menu-item-divided pure-menu-selected");
+            });
+        </script>
     </body>
 </html>
