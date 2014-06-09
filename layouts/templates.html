@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <%= render 'head' %>
+    <body>
+        <div id="layout">
+            <!-- Menu toggle -->
+            <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+            </a>
+            <%= render 'menu' %>
+            <div id="main">
+                <div class="header">
+                    <h1>Hands-on Templates</h1>
+                    <!-- <h2>Using SPARQL for querying data.</h2> -->
+                </div>
+                <div class="content">
+                    <%= yield %>
+                </div>
+            </div>
+        </div>
+        <script src="js/highlight.js"></script>
+        <script src="js/ui.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/elag.js"></script>
+        <script src="js/ui.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#menu_item_templates").addClass("menu-item-divided pure-menu-selected");
+            });
+        </script>
+    </body>
+</html>
