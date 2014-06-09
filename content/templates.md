@@ -30,4 +30,4 @@ title: "Start"
         <favoriteMovie>, 
         <favoriteActor>;
     a ns0:Template ;
-    rdfs:label "Temlate for FOAF Person" .
+    rdfs:label "Template for FOAF Person" .

@@ -4439,7 +4439,7 @@ I"ß<ul>
   <li>Official OntoWiki Repository: <a href="https://github.com/AKSW/OntoWiki">https://github.com/AKSW/OntoWiki</a></li>
   <li>Project Homepage: <a href="http://amsl.technology/">http://amsl.technology/</a></li>
 </ul>
-;T;@qI"/templates/;T{;{	;I"<!doctype html>
+;T;@qI"/templates/;T{;{	;I"<!doctype html>
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -4508,7 +4508,7 @@ I"ß<ul>
     &lt;favoriteMovie&gt;, 
     &lt;favoriteActor&gt;;
 a ns0:Template ;
-rdfs:label "Temlate for FOAF Person" .
+rdfs:label "Template for FOAF Person" .
 </code></pre>
 
                 </div>
@@ -4525,7 +4525,7 @@ rdfs:label "Temlate for FOAF Person" .
             });
         </script>
     </body>
-</html>;T;	I"º# Template for Templates
+</html>;T;	I"»# Template for Templates
 
     @base <http://elag.templates/> .
     @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -4553,8 +4553,8 @@ rdfs:label "Temlate for FOAF Person" .
         <favoriteMovie>, 
         <favoriteActor>;
     a ns0:Template ;
-    rdfs:label "Temlate for FOAF Person" .;T;
-I"L<h1 id="template-for-templates">Template for Templates</h1>
+    rdfs:label "Template for FOAF Person" .;T;
+I"M<h1 id="template-for-templates">Template for Templates</h1>
 
 <pre><code>@base &lt;http://elag.templates/&gt; .
 @prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
@@ -4582,6 +4582,6 @@ I"L<h1 id="template-for-templates">Template for Templates</h1>
     &lt;favoriteMovie&gt;, 
     &lt;favoriteActor&gt;;
 a ns0:Template ;
-rdfs:label "Temlate for FOAF Person" .
+rdfs:label "Template for FOAF Person" .
 </code></pre>
 ;T;@w:versioni
