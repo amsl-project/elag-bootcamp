@@ -38,7 +38,143 @@
                     <h2>The Interactive SQL Utility</h2>
                 </div>
                 <div class="content">
-                    
+                    <h1 id="graph-manipulations-with-isql">Graph manipulations with iSQL</h1>
+
+<p>OntoWiki offers an abstraction layer between the user and the triplestore. It is often sufficient (and comfortable) to rely solely on the OntoWiki GUI. When we get closer to ‘big data’ (in terms of number of triples), importing and exporting data via OntoWiki can be slow or even impossible. Also creating backups on a regular basis can quickly become a chore.</p>
+
+<p>In these cases it is better to bypass the OntoWiki GUI completely. As a programmer, you would also want to bypass any GUI at all and get to a CLI. To access Virtuoso from the console, we can use an interactive SQL shell. Virtuoso comes with its own version which we can invoke by typing</p>
+
+<pre><code>$ isql-vt
+</code></pre>
+
+<p>We can also access the isql shell via the Virtuoso conductor, however the CLI can easily be used with scripts, e.g. by piping lines of codes into the isql-vt. (An alternative way would be to use an odbc library for your language of choice. If you are interested to know how to do this, you can get a basic example by looking at the file <code>OntoWiki/application/script/odbctest.php</code>.</p>
+
+<p>The <code>iSQL</code> can be used to run <code>SPARQL</code> queries and also to do <code>SPARQL</code> Updates. Generally, you can run a query by prefixing it with the keyword <code>SPARQL</code>, try for example:</p>
+
+<pre><code>SQL&gt; SPARQL SELECT DISTINCT ?g WHERE {GRAPH ?g { ?s ?p ?o . }} ;
+</code></pre>
+
+<p>The iSQL SPARQL interface will give us some more functionality than the ‘simple’ SPARQL endpoints provided by OntoWiki or the Virtuoso SPARQL endpoint. If the according roles have been granted to the dba user (or rather the user you sign in with) we can also run a SPARQL UPDATE or a SPARQL DELETE to manipulate your graphs on a triple-level. Sadly, going in the depth here lies slightly out of the scope of our bootcamp. For further information, see <a href="http://www.w3.org/TR/2009/WD-sparql11-update-20091022/">http://www.w3.org/TR/2009/WD-sparql11-update-20091022/</a></p>
+
+<p>We will focus more on how to use the iSQL to delete and create new graphs. The big advantages here are that you can bypass the PHP upload and post_max limits and, again, that you can import a lot of graphs via a command line script. Also the iSQL shell is significantly faster for large RDF dumps.</p>
+
+<h2 id="deleting-and-creating">Deleting and creating</h2>
+
+<p>The most basic operations are creating and deleting graphs. This can be done by</p>
+
+<pre><code>SQL&gt; SPARQL CREATE GRAPH &lt;iri&gt;;
+</code></pre>
+
+<p>and</p>
+
+<pre><code>SQL&gt; SPARQL DROP GRAPH &lt;iri&gt; ;
+</code></pre>
+
+<p>Sometimes we just want to wipe all data from a graph. We can always delete and create a graph, but this can also be done in one command:</p>
+
+<pre><code>SQL&gt; SPARQL CLEAR GRAPH &lt;iri&gt; ;
+</code></pre>
+
+<h3 id="example-uploading-a-turtle-file">Example: Uploading a Turtle File</h3>
+
+<p>Suppose we have a (large) Turtle file ‘example.ttl’ we want to import into OntoWiki. First of all, we will create a new knowledge base in OntoWiki. We choose the graph IRI to be «http://www.example.org/example/»</p>
+
+<p>!! It’s important, that the example.ttl is located in a folder that is included in the “dirs_allwowed” key of the virtuoso.ini file. Usually, we just use the /tmp folder.</p>
+
+<p>Then we can use:</p>
+
+<pre><code>DB.DBA.TTLP_MT(
+   file_to_string_output('/tmp/example.ttl'),
+   '',
+   '&lt;http://www.example.org/example/&gt;'
+);
+</code></pre>
+
+<p>This it can be somewhat cumbersome to type directly into the <code>iSQL</code> shell, it’s good practice to type the commands in your preferred text editor and then copy-paste them into the <code>iSQL</code> shell. </p>
+
+<p><em>Note</em>: The second parameter specifies a base IRI for relative IRIs like <code>&lt;/example.org&gt;</code>. More about this command and also commands for importing rdfxml can be found here: <a href="http://docs.openlinksw.com/virtuoso/fn_ttlp_mt.html">http://docs.openlinksw.com/virtuoso/fn_ttlp_mt.html</a></p>
+
+<p>It is best to use Turtle or even N-Triples as a format, since these formats require minimal parsing. Also, large files can quickly be split into smaller parts with the <code>split</code> command in case it is necessary to spread out the importing process over several days. Dumps of big graphes (e.g. from the dbpedia or the British Library) can easily be several GB in size. </p>
+
+<h2 id="inserting-and-deleting-triples">Inserting and deleting triples</h2>
+
+<p>To insert or delete triples, we can use the following SPARQL template:</p>
+
+<pre><code>PREFIX pre1: &lt;prefix_IRI1&gt;
+    ...
+PREFIX prem: &lt;prefix_IRIm&gt;
+INSERT DATA { 
+    GRAPH &lt;IRI&gt; { 
+        &lt;s1&gt; &lt;p1&gt; &lt;o1&gt; .
+        &lt;s2&gt; &lt;p2&gt; &lt;o2&gt; .
+        ...
+        &lt;sn&gt; &lt;pn&gt; &lt;on&gt; .
+       } 
+}
+</code></pre>
+
+<p>In place of <code>INSERT</code>, we can use <code>DELETE</code> to delete triples.</p>
+
+<h3 id="i-classicon-pencili-exercise-adding-data"><i class="icon-pencil"></i> Exercise: Adding data</h3>
+
+<p>Using the the isql shell, create a new graph with the IRI <code>&lt;urn:tinylibrary&gt;</code>. Using the prefix <code>dc</code> as <code>&lt;http://purl.org/dc/elements/1.1/&gt;</code> and <code>bibo</code> as <code>&lt;http://purl.org/ontology/bibo/&gt;</code>, insert these triples:</p>
+
+<pre><code>&lt;urn:tinylibrary/sense_and_sensibility&gt;
+    a bibo:Book ;
+    dc:title "Sense and Sensibility" ;
+    dc:creator "Jane Austen" .
+&lt;urn:tinylibrary/pride_and_prejudice&gt;
+    a bibo:Book ;
+    dc:title "Pride and Prejudice" ;
+    dc:creator "Jane Austen" .
+&lt;urn:tinylibrary/mansfield_park&gt; 
+    a bibo:Book ;
+    dc:title "Mansfield Park" ;
+    dc:creator "Jane Austen" .
+</code></pre>
+
+<p><em>Hint:</em> Use a text editor to first build your <code>SPARQL</code> command, then copy-paste it into your isql shell. Check in your OntoWiki if your operation was successful.</p>
+
+<h2 id="graph-manipulations">Graph manipulations</h2>
+<p>It might be necessary to construct new triples from existing ones. We will use a slightly different SPARQL command:</p>
+
+<pre><code>WITH &lt;g1&gt; DELETE { a b c } INSERT { x y z } WHERE { ... }
+</code></pre>
+
+<p>Here, <code>g1</code> is the graph IRI where the parameters <code>a</code>, <code>b</code>, <code>c</code>, <code>x</code>, <code>y</code>, <code>z</code> can either be IRIs or variables which are defined in the <code>WHERE</code> part. The parameter <code>c</code> and <code>z</code> can also be literals. The <code>DELETE</code> or <code>INSERT</code> part can also be omitted.</p>
+
+<h3 id="i-classicon-pencili-exercise-from-strings-to-uris"><i class="icon-pencil"></i> Exercise: From strings to URIs</h3>
+<p>Suppose now we want to exchange the string “Jane Austen” with an actual URI and move the text string to the URI. We will use the dbpedia URI for Jane Austen, i.e. <code>&lt;http://dbpedia.org/resource/Jane_Austen&gt;</code>. This means we need to add triples of the form</p>
+
+<pre><code>?s dc:creator db:Jane_Austen .
+db:Jane_Austen rdfs:label "Jane Austen" .
+</code></pre>
+
+<p>for every triple of the form</p>
+
+<pre><code>?s dc:creator "Jane Austen" .
+</code></pre>
+
+<p>Also we have to delete these triples.</p>
+
+<h3 id="i-classicon-pencili-construct-new-triples"><i class="icon-pencil"></i> Construct new triples</h3>
+<p>We could query the books in our tiny library by a sparql query to find all books by Jane Austen. But it might be desirable to have those triples in our triplestore. So for each triple of the form</p>
+
+<pre><code>&lt;iri&gt; dc:creator db:Jane_Austen .
+</code></pre>
+
+<p>we need to also add a triple of the form</p>
+
+<pre><code>db:Jane_Austen foaf:made &lt;iri&gt; .
+</code></pre>
+
+<p>Do this with an appropriate insert statement.</p>
+
+<p><em>NB:</em> This exercise also works if db:Jane_Austen is replaced by a variable. This can be used to construct a large set of triples with very little manual work</p>
+
+<p><em>Tip:</em> It’s easy to mess up your data with ‘wrong’ triples. Repeating a SPARQL command with <code>DELETE</code> instead of <code>INSERT</code> will <em>not</em> always undo the changes. It’s advisable to preview the triples that are inserted or deleted. This can be done by using <code>CONSTRUCT</code> instead of <code>DELETE</code> or <code>INSERT</code>. The <code>CONSTRUCT</code> command will only display the triples, but not change the triplestore itself.</p>
+
+<p>For a more in-depth view about SPARQL graph manipulations, see <a href="http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtTipsAndTricksSPARQL11Delete">http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtTipsAndTricksSPARQL11Delete</a></p>
 
                 </div>
             </div>
