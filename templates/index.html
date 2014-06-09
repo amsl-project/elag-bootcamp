@@ -35,14 +35,38 @@
 </div>
             <div id="main">
                 <div class="header">
-                    <h1>Useful links</h1>
+                    <h1>Hands-on Templates</h1>
                     <!-- <h2>Using SPARQL for querying data.</h2> -->
                 </div>
                 <div class="content">
-                    <ul>
-  <li>Official OntoWiki Repository: <a href="https://github.com/AKSW/OntoWiki">https://github.com/AKSW/OntoWiki</a></li>
-  <li>Project Homepage: <a href="http://amsl.technology/">http://amsl.technology/</a></li>
-</ul>
+                    <h1 id="hands-on-templates">Hands-on Templates</h1>
+
+<h2 id="template-for-templates">Template for Templates</h2>
+
+<pre><code>@base &lt;http://elag.templates/&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix ns0: &lt;http://vocab.ub.uni-leipzig.de/bibrm/&gt; .
+
+&lt;TemplateForTemplates&gt; ns0:bindsClass ns0:Template ;
+                       ns0:providesProperty ns0:bindsClass, ns0:optionalProperty, ns0:providesProperty ;
+                       a ns0:Template .
+</code></pre>
+
+<h2 id="template-for-foaf-person">Template for FOAF Person</h2>
+
+<pre><code>@base &lt;http://elag.templates/&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix ns0: &lt;http://vocab.ub.uni-leipzig.de/bibrm/&gt; .
+
+&lt;http://elag2014.org/Templates/Template/Temlate_for_FOAF_Person&gt; ns0:bindsClass &lt;http://xmlns.com/foaf/0.1/Person&gt; ;
+                                                                 ns0:providesProperty &lt;http://xmlns.com/foaf/0.1/firstName&gt;, &lt;http://xmlns.com/foaf/0.1/lastName&gt;,  &lt;http://xmlns.com/foaf/0.1/knows&gt;, &lt;favoriteMovie&gt;, &lt;favoriteActor&gt;;
+                                                                 a ns0:Template ;
+                                                                 rdfs:label "Temlate for FOAF Person" .
+</code></pre>
 
                 </div>
             </div>
@@ -54,7 +78,7 @@
         <script src="js/ui.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
-                $("#menu_item_links").addClass("menu-item-divided pure-menu-selected");
+                $("#menu_item_templates").addClass("menu-item-divided pure-menu-selected");
             });
         </script>
     </body>
